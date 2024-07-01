@@ -9,7 +9,7 @@ Below you will find an example implementation and json response of this library:
 ### Example response
 ```json
 {
-  "email": "soma+email@host.com",
+  "email": "some+email@host.com",
   "score": 100,
   "meta": {
     "block_list": true,
