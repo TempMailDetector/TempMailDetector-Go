@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	apiURL      = "https://api.tempmaildetector.com/check-email"
+	apiURL      = "https://api.tempmaildetector.com/check"
 	contentType = "application/json"
 )
 
@@ -18,20 +18,19 @@ type Client struct {
 	APIKey string
 }
 
-type EmailCheckRequest struct {
-	Email string `json:"email"`
+type DomainCheckRequest struct {
+	Domain string `json:"domain"`
 }
 
-type EmailCheckResponse struct {
-	Email string `json:"email"`
-	Score int    `json:"score"`
-	Meta  struct {
+type DomainCheckResponse struct {
+	Domain string `json:"domain"`
+	Score  int    `json:"score"`
+	Meta   struct {
 		BlockList           bool `json:"block_list"`
 		DomainAge           int  `json:"domain_age"`
 		WebsiteResolves     bool `json:"website_resolves"`
-		RandomCharacters    bool `json:"random_characters"`
 		AcceptsAllAddresses bool `json:"accepts_all_addresses"`
-		UsesPlus            bool `json:"uses_plus"`
+		ValidEmailSecurity  bool `json:"valid_email_security"`
 	} `json:"meta"`
 }
 
@@ -39,8 +38,8 @@ func NewClient(apiKey string) *Client {
 	return &Client{APIKey: apiKey}
 }
 
-func (c *Client) CheckEmail(email string) (*EmailCheckResponse, error) {
-	requestBody, err := json.Marshal(EmailCheckRequest{Email: email})
+func (c *Client) CheckDomain(domain string) (*DomainCheckResponse, error) {
+	requestBody, err := json.Marshal(DomainCheckRequest{Domain: domain})
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request body: %w", err)
 	}
@@ -68,7 +67,7 @@ func (c *Client) CheckEmail(email string) (*EmailCheckResponse, error) {
 		return nil, errors.New("received non-200 response: " + string(body))
 	}
 
-	var response EmailCheckResponse
+	var response DomainCheckResponse
 	if err := json.Unmarshal(body, &response); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
 	}
