@@ -9,15 +9,14 @@ Below you will find an example implementation and json response of this library:
 ### Example response
 ```json
 {
-  "email": "mipe+im132@devncie.com",
+  "domain": "apn7.com",
   "score": 100,
   "meta": {
     "block_list": true,
-    "domain_age": 1,
+    "domain_age": 2,
     "website_resolves": false,
-    "random_characters": true,
     "accepts_all_addresses": false,
-    "uses_plus": true
+    "valid_email_security": true
   }
 }
 ```
@@ -37,12 +36,12 @@ func main() {
 	apiKey := "YOUR_API_KEY"
 	client := tempmaildetector.NewClient(apiKey)
 
-	email := "temp+mail@host.com"
-	response, err := client.CheckEmail(email)
+	domain := "devncie.com"
+	response, err := client.CheckDomain(domain)
 	if err != nil {
-		log.Fatalf("Error checking email: %v", err)
+		log.Fatalf("Error checking domain: %v", err)
 	}
 
-	fmt.Printf("Email: %s\nScore: %d\nMeta: %+v\n", response.Email, response.Score, response.Meta)
+	fmt.Printf("Domain: %s\nScore: %d\nMeta: %+v\n", response.Domain, response.Score, response.Meta)
 }
 ```
