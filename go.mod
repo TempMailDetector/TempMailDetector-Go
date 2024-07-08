@@ -1,3 +1,3 @@
-module github.com/TempMailDetector/TempMailDetector-Go
+module tempmaildetector
 
 go 1.22.4
